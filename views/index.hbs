@@ -8,7 +8,11 @@
     <title>Document</title>
 </head>
 <body>
-    
-    <div id="tasks">{{tasks}}</div>
+    <form method="POST" action="/tasks">
+        <input type="text" id="title" name="title" placeholder="title">
+        <input type="text" id="description" name="description" placeholder="description">
+        <input type="submit">
+    </form>
+    <br><br><br><div id="tasks">{{tasks}}</div>
 </body>
 </html>
