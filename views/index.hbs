@@ -4,15 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
+    <div>
     <form method="POST" action="/tasks">
         <input type="text" id="title" name="title" placeholder="title">
         <input type="text" id="description" name="description" placeholder="description">
-        <input type="submit">
+        <input type="submit" value="Create Task">
     </form>
-    <br><br><br><div id="tasks">{{tasks}}</div>
+</div>
+<div>
+<form id="edit" method="POST" action="/tasks/update" style="display: none">
+    <input type="text" class="_id" name="_id" placeholder="_id" style="display: none">
+    <input type="text" class="title" name="title" placeholder="title">
+    <input type="text" class="description" name="description" placeholder="description">
+    <input type="text" class="status" name="status" placeholder="status">
+    <input type="submit" value="Update Task">
+</form>
+  <div>
+    <form method="POST" action="/tasks/delete" id="delete" style="display:none">
+        <input type="text" class="deleteID" name="_id" placeholder="_id" style="display: none">
+        </form>
+        <div id="del">
+        <input type="text" id="titleDel" name="title" placeholder="title" style="display:none">
+        <input type="text" id="descriptionDel" name="description" placeholder="description" style="display:none">
+       <span id="cancel" style="display: none"><input type="submit" form="delete" value="Delete"> <button onclick="cancelDelete()">cancel</button> Are you sure you want to delete this task</span>
+       </div>
+</div>
+</div>
+<div>
+    {{#each tasks}}
+
+            <div class="tasks">
+            <span style="display: none">{{this._id}}</span><br>
+            <span>{{this.title}}</span><br>
+            <span>{{this.description}}</span><br>
+            <span>{{this.status}}</span><br>
+            <span>Created At: {{this.createdAt}}</span><br>
+            <span>Updated At: {{this.updatedAt}}</span><br>
+            <button class="button" onclick="submit()">Edit</button>
+            <button class="delete" onclick="deleteTask()">Delete</button>
+            </div><br><br>
+        {{/each}}
+</div>
+
+    
 </body>
-</html>
+</html><script src="script.js"></script>

@@ -7,20 +7,18 @@ router.post('/tasks', async (req, res) => {
 
     try {
         await task.save()
-        res.status(201).send(task)
+        res.status(201).redirect('/tasks')
     } catch (e) {
         res.status(400).send(e)
     }
 })
 
-router.get('', (req, res) => {
-    res.render('index')
-})
 
 
 router.get('/tasks', async (req, res) => {
     try {
         const tasks = await Task.find({})
+        
         res.render('index', {
             tasks: tasks
         })
@@ -45,9 +43,9 @@ router.get('/tasks/:id', async (req, res) => {
     }
 })
 
-router.patch('/tasks/:id', async (req, res) => {
+router.post('/tasks/update', async (req, res) => {
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['title','description', 'status']
+    const allowedUpdates = ['_id','title','description', 'status']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
@@ -55,27 +53,27 @@ router.patch('/tasks/:id', async (req, res) => {
     }
 
     try {
-        const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+        const task = await Task.findByIdAndUpdate(req.body._id, req.body, { new: true, runValidators: true })
 
         if (!task) {
             return res.status(404).send()
         }
 
-        res.send(task)
+        res.redirect('/tasks')
     } catch (e) {
         res.status(400).send(e)
     }
 })
 
-router.delete('/tasks/:id', async (req, res) => {
+router.post('/tasks/delete', async (req, res) => {
     try {
-        const task = await Task.findByIdAndDelete(req.params.id)
+        const task = await Task.findByIdAndDelete(req.body._id)
 
         if (!task) {
             res.status(404).send()
         }
 
-        res.send(task)
+        res.redirect('/tasks')
     } catch (e) {
         res.status(500).send()
     }
