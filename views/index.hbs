@@ -8,6 +8,11 @@
     <title>Document</title>
 </head>
 <body>
+
+    <div>
+        {{>user}}
+    </div>
+
     <div>
     <form method="POST" action="/tasks">
         <input type="text" id="title" name="title" placeholder="title">
@@ -39,9 +44,9 @@
 
             <div class="tasks">
             <span style="display: none">{{this._id}}</span><br>
-            <span>{{this.title}}</span><br>
-            <span>{{this.description}}</span><br>
-            <span>{{this.status}}</span><br>
+            <span>Title: {{this.title}}</span><br>
+            <span>Description: {{this.description}}</span><br>
+            <span>Status: {{this.status}}</span><br>
             <span>Created At: {{this.createdAt}}</span><br>
             <span>Updated At: {{this.updatedAt}}</span><br>
             <button class="button" onclick="submit()">Edit</button>
@@ -49,6 +54,7 @@
             </div><br><br>
         {{/each}}
 </div>
+
 
     
 </body>
