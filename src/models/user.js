@@ -25,10 +25,13 @@ const userSchema  = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        minlength: 7,
+        minlength: 6,
         validate(value){
             if(value.toLowerCase().includes('password')){
                 throw new Error('Password must not be "password"')
+            }
+            if(!/\d/.test(value)){
+                throw new Error('Password must contain a number')
             }
         }
     },

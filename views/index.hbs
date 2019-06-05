@@ -9,9 +9,7 @@
 </head>
 <body>
 
-    <div>
-        {{>user}}
-    </div>
+       {{>navbar}}
 
     <div>
     <form method="POST" action="/tasks">
@@ -25,7 +23,7 @@
     <input type="text" class="_id" name="_id" placeholder="_id" style="display: none">
     <input type="text" class="title" name="title" placeholder="title">
     <input type="text" class="description" name="description" placeholder="description">
-    <input type="text" class="status" name="status" placeholder="status">
+    <input type="text" class="status" name="status" placeholder="status" style="display: none">
     <input type="submit" value="Update Task">
 </form>
   <div>
@@ -44,14 +42,14 @@
 
             <div class="tasks">
             <span style="display: none">{{this._id}}</span><br>
-            <span>Title: {{this.title}}</span><br>
-            <span>Description: {{this.description}}</span><br>
-            <span>Status: {{this.status}}</span><br>
-            <span>Created At: {{this.createdAt}}</span><br>
-            <span>Updated At: {{this.updatedAt}}</span><br>
+            Title: <span>{{this.title}}</span><br>
+            Description: <span>{{this.description}}</span><br>
+            Status: <span> {{this.status}}</span><br>
+            Created At: <span> {{this.createdAt}}</span><br>
+            Updated At: <span>{{this.updatedAt}}</span><br>
             <button class="button" onclick="submit()">Edit</button>
             <button class="delete" onclick="deleteTask()">Delete</button>
-            </div><br><br>
+            <button class="buttonToggle" onclick="toggleTask()">Toggle Status</button>
         {{/each}}
 </div>
 

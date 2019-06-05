@@ -66,7 +66,7 @@ router.get('/users/logout',  authorization , async (req, res) => {
         await req.user.save()
 
         res.clearCookie('token')
-        res.status(200).send()
+        res.status(200).redirect('../../')
     } catch (e) {
         res.boom.badImplementation('could not logout')
     }
@@ -87,7 +87,7 @@ router.post('/users/logoutAll', authorization, async (req, res) => {
 router.get('/users/profile', authorization ,async (req, res) => {
         
     
-        res.send(req.user)
+        res.render('profile',{ user: req.user})
         
 })
 

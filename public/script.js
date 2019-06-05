@@ -9,6 +9,7 @@ function submit(){
     var title = event.target.parentNode.childNodes[4].textContent
     var description = event.target.parentNode.childNodes[7].textContent
     var status = event.target.parentNode.childNodes[10].textContent
+    console.log(status)
     document.querySelector('#edit').style.display = ""
     
     document.querySelector('._id').value = _id
@@ -46,4 +47,23 @@ function cancelDelete(){
     document.querySelector('#descriptionDel').style.display = "none"
     document.querySelector('#titleDel').style.display = "none"
     document.querySelector('form').style.display = ""
+}
+
+function toggleTask(){
+    window.scrollTo(0, 0)
+    var _id = event.target.parentNode.childNodes[1].textContent
+    var title = event.target.parentNode.childNodes[4].textContent
+    var description = event.target.parentNode.childNodes[7].textContent
+    var status = event.target.parentNode.childNodes[10].textContent
+    
+    document.querySelector('._id').value = _id
+    document.querySelector('.title').value = title
+    document.querySelector('.description').value = description
+    if(status.includes("To-Do")){
+    document.querySelector('.status').value = "Completed"
+    }
+    if(status.includes("Completed")){
+    document.querySelector('.status').value = "To-Do"
+    }
+    document.querySelector('#edit').submit()
 }
