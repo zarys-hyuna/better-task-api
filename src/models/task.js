@@ -21,9 +21,6 @@ const schema = new mongoose.Schema({
         type: 'String',
         trim: true,
         default: 'To-Do'
-    },
-    completedDate: {
-        type: Date
     }
 
 }, 

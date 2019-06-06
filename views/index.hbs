@@ -24,20 +24,21 @@
     <input type="text" class="title" name="title" placeholder="title">
     <input type="text" class="description" name="description" placeholder="description">
     <input type="text" class="status" name="status" placeholder="status" style="display: none">
-    <input type="submit" value="Update Task">
+    <input type="submit" value="Update Task"> <button onclick="cancelDelete()" type="button">cancel</button> Are you sure you want to edit this task</span>
 </form>
   <div>
     <form method="POST" action="/tasks/delete" id="delete" style="display:none">
         <input type="text" class="deleteID" name="_id" placeholder="_id" style="display: none">
         </form>
         <div id="del">
-        <input type="text" id="titleDel" name="title" placeholder="title" style="display:none">
-        <input type="text" id="descriptionDel" name="description" placeholder="description" style="display:none">
+        <input type="text" id="titleDel" name="title" placeholder="title" style="display:none" readonly>
+        <input type="text" id="descriptionDel" name="description" placeholder="description" style="display:none" readonly>
        <span id="cancel" style="display: none"><input type="submit" form="delete" value="Delete"> <button onclick="cancelDelete()">cancel</button> Are you sure you want to delete this task</span>
        </div>
 </div>
 </div>
 <div>
+
     {{#each tasks}}
 
             <div class="tasks">
@@ -47,7 +48,7 @@
             Status: <span> {{this.status}}</span><br>
             Created At: <span> {{this.createdAt}}</span><br>
             Updated At: <span>{{this.updatedAt}}</span><br>
-            <button class="button" onclick="submit()">Edit</button>
+            <button class="button" onclick="submitt()">Edit</button>
             <button class="delete" onclick="deleteTask()">Delete</button>
             <button class="buttonToggle" onclick="toggleTask()">Toggle Status</button>
         {{/each}}

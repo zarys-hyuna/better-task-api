@@ -18,7 +18,7 @@ try {
 } 
 
 catch (e) {
-    res.status(401).send({error: 'Authentication token not found'})
+    res.boom.unauthorized('Authentication token not found')
 }
 
 }

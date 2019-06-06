@@ -5,12 +5,13 @@ const authorization = require('../middleware/authorization')
 const Joi = require('@hapi/joi')
 
 const schema = Joi.object().keys({
-    name: Joi.string().alphanum().min(3),
-    password: Joi.string().alphanum().min(6).required(),
-    email: Joi.string().email().required()
+    name: Joi.string().regex(/^[a-zA-Z0-9 ]*$/).min(3),
+    password: Joi.string().alphanum().min(6),
+    email: Joi.string().email()
 })
+
+
 router.post('/users', async (req, res)=> {
-    const user = new User(req.body)
     const {error, value} = Joi.validate({
         name: req.body.name,
         email: req.body.email,
@@ -21,6 +22,7 @@ router.post('/users', async (req, res)=> {
         return res.boom.badRequest('bad form information')
     }
 
+    const user = new User(req.body)
 
     try{
     await user.save()
@@ -93,8 +95,17 @@ router.get('/users/profile', authorization ,async (req, res) => {
 
 
 
-router.patch('/users/profile', authorization, async (req, res) => {
+router.post('/users/profile/update', authorization, async (req, res) => {
     const updates = Object.keys(req.body)
+
+    const {error, value} = Joi.validate({
+        name: req.body.name,
+    }, schema)
+    
+    if(error !== null){
+        return res.boom.badRequest('bad form information')
+    }
+
     const allowedUpdates = ['name', 'email', 'age', 'password']
     const isValid = updates.every((update)=> {
         return allowedUpdates.includes(update)
@@ -104,20 +115,24 @@ router.patch('/users/profile', authorization, async (req, res) => {
         return res.boom.badRequest('could not update profile')
     }
 
- try {
+    try {
 
      updates.forEach((update) => req.user[update] = req.body[update])
      await req.user.save()
 
-     res.send(req.user)
+     res.redirect('../../../users/profile')
 
- } catch (e) {
-    res.res.boom.badImplementation('could not update')
- }
+
+
+    } 
+    
+    catch (e) {
+        res.boom.badImplementation('could not update')
+    }
 
 })
 
-router.delete('/users/profile', authorization, async (req, res) => {
+router.post('/users/profile/delete', authorization, async (req, res) => {
     try {
         await req.user.remove()
         res.send(req.user)
