@@ -54,7 +54,7 @@ router.post('/users/login', async (req, res) => {
         res.status(200).redirect('../../tasks')
         
     } catch (e) {
-        res.boom.badRequest('could not login')
+        res.boom.badRequest('User could not be logged in')
     }
 })
 
@@ -70,7 +70,7 @@ router.get('/users/logout',  authorization , async (req, res) => {
         res.clearCookie('token')
         res.status(200).redirect('../../')
     } catch (e) {
-        res.boom.badImplementation('could not logout')
+        res.boom.badImplementation('User could not be logged out')
     }
 })
 
@@ -82,7 +82,7 @@ router.post('/users/logoutAll', authorization, async (req, res) => {
         res.clearCookie('token')
         res.send()
     } catch (e) {
-        res.boom.badImplementation('could not logout')
+        res.boom.badImplementation('User could not be logged out')
     }
 })
 
@@ -103,7 +103,7 @@ router.post('/users/profile/update', authorization, async (req, res) => {
     }, schema)
     
     if(error !== null){
-        return res.boom.badRequest('bad form information')
+        return res.boom.badRequest('Form data Invalid')
     }
 
     const allowedUpdates = ['name', 'email', 'age', 'password']
@@ -112,7 +112,7 @@ router.post('/users/profile/update', authorization, async (req, res) => {
     })
 
     if (!isValid) {
-        return res.boom.badRequest('could not update profile')
+        return res.boom.badRequest('Attempting to update what is not allowed')
     }
 
     try {
@@ -127,7 +127,7 @@ router.post('/users/profile/update', authorization, async (req, res) => {
     } 
     
     catch (e) {
-        res.boom.badImplementation('could not update')
+        res.boom.badImplementation('Could not update')
     }
 
 })
@@ -137,7 +137,7 @@ router.post('/users/profile/delete', authorization, async (req, res) => {
         await req.user.remove()
         res.send(req.user)
     } catch (e) {
-        return  res.res.boom.badImplementation('could not delete')
+        return  res.res.boom.badImplementation('Could not delete')
     }
 })
 
