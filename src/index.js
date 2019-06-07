@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const taskRouter = require('./router/tasks')
 const userRouter = require('./router/users')
 const boom = require('express-boom')
-
+const dotenv = require('dotenv').config({path: '/home/internnum5/Node stuff/better-task-api/config.env'})
 
 const hbs = require('hbs')
 const app = express()
@@ -17,7 +17,6 @@ app.use(boom())
 app.set('view engine', 'hbs')
 hbs.registerPartials('/home/internnum5/Node stuff/better-task-api/views/partials')
 app.use(express.static('/home/internnum5/Node stuff/better-task-api/public'))
-
 app.use(express.json())
 app.use(taskRouter)
 app.use(userRouter)
